@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f4f6fb">
+    <title>TecnoStock | Tecnología para tu día a día</title>
+    <link rel="stylesheet" href="./css/styles.css">
+    <script type="module" src="./js/app.js"></script>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="header-inner">
+        <a class="brand" href="./" aria-label="TecnoStock, inicio">
+          <span class="brand-mark" aria-hidden="true">T</span>
+          <span>
+            <strong>TecnoStock</strong>
+            <small>TECNOLOGÍA PARA TU DÍA A DÍA</small>
+          </span>
+        </a>
+        <a class="cart-shortcut" href="#carrito">
+          <span aria-hidden="true">🛒</span>
+          Mi carrito
+          <span id="header-units" class="unit-badge" aria-live="polite">0</span>
+        </a>
+      </div>
+    </header>
+
+    <main class="page-shell">
+      <section class="welcome-panel" aria-labelledby="welcome-title">
+        <div>
+          <h1 id="welcome-title">Encuentra lo que necesitas.</h1>
+          <p>Periféricos, accesorios y suministros tecnológicos para tu día a día.</p>
+        </div>
+      </section>
+
+      <div id="app-notice" class="app-notice" role="status" aria-live="polite" hidden></div>
+
+      <section class="catalog-section" aria-labelledby="catalog-title">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">CATÁLOGO</p>
+            <h2 id="catalog-title">Nuestros productos</h2>
+          </div>
+          <p id="results-count" class="results-count" aria-live="polite"></p>
+        </div>
+
+        <form id="filters" class="filters" role="search">
+          <div class="field search-field">
+            <label for="search">Buscar productos</label>
+            <div class="input-with-icon">
+              <span aria-hidden="true">⌕</span>
+              <input id="search" name="search" type="search" placeholder="Nombre o descripción" autocomplete="off" disabled>
+            </div>
+          </div>
+          <div class="field">
+            <label for="category">Categoría</label>
+            <select id="category" name="category" disabled>
+              <option value="">Todas las categorías</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="sort">Ordenar por</label>
+            <select id="sort" name="sort" disabled>
+              <option value="default">Recomendados</option>
+              <option value="price-asc">Precio: menor a mayor</option>
+              <option value="price-desc">Precio: mayor a menor</option>
+            </select>
+          </div>
+          <label class="availability-toggle">
+            <input id="available-only" type="checkbox" disabled>
+            <span class="custom-checkbox" aria-hidden="true"></span>
+            Solo disponibles
+          </label>
+          <button id="clear-filters" class="button button-quiet clear-filters" type="button" disabled>Limpiar filtros</button>
+        </form>
+
+        <product-list id="product-list" class="product-list" aria-live="polite" aria-busy="true"></product-list>
+      </section>
+
+      <section id="carrito" class="cart-section" aria-labelledby="cart-title">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">TU PEDIDO</p>
+            <h2 id="cart-title">Carrito de compras</h2>
+          </div>
+          <p class="cart-hint">Los precios se calculan con el catálogo vigente.</p>
+        </div>
+        <shopping-cart id="shopping-cart"></shopping-cart>
+      </section>
+
+      <footer class="site-footer">
+        <p><strong>TecnoStock</strong> · Compra simulada para fines de demostración. No se procesa ningún pago ni se actualiza el inventario.</p>
+      </footer>
+    </main>
+
+    <dialog id="order-dialog" class="order-dialog" aria-labelledby="order-title">
+      <div class="dialog-header">
+        <span class="success-mark" aria-hidden="true">✓</span>
+        <div>
+          <p class="eyebrow">PEDIDO REGISTRADO</p>
+          <h2 id="order-title">¡Listo! Tu pedido está confirmado.</h2>
+        </div>
+      </div>
+      <p class="simulation-note">Esta es una confirmación local de demostración. No se realizó ningún pago ni se modificó el inventario.</p>
+      <div id="order-details" class="order-details"></div>
+      <button id="close-order" class="button button-primary dialog-close" type="button">Volver a la tienda</button>
+    </dialog>
+  </body>
+</html>

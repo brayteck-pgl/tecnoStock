@@ -1,0 +1,137 @@
+[
+  {
+    "id": 101,
+    "name": "Teclado mecánico Nova",
+    "category": "Periféricos",
+    "price": 189900,
+    "stock": 8,
+    "description": "Teclado USB mecánico con iluminación para trabajo y juego.",
+    "active": true
+  },
+  {
+    "id": 102,
+    "name": "Mouse inalámbrico Air",
+    "category": "Periféricos",
+    "price": 79900,
+    "stock": 15,
+    "description": "Mouse óptico inalámbrico, cómodo y preciso para uso diario.",
+    "active": true
+  },
+  {
+    "id": 103,
+    "name": "Audífonos estéreo Pulse",
+    "category": "Audio",
+    "price": 149900,
+    "stock": 6,
+    "description": "Audífonos con micrófono integrado y conexión USB.",
+    "active": true
+  },
+  {
+    "id": 104,
+    "name": "Base refrigerante para portátil",
+    "category": "Accesorios",
+    "price": 89900,
+    "stock": 0,
+    "description": "Soporte ergonómico con ventilación para computador portátil.",
+    "active": true
+  },
+  {
+    "id": 105,
+    "name": "Memoria USB 64 GB",
+    "category": "Almacenamiento",
+    "price": 35900,
+    "stock": 22,
+    "description": "Unidad USB compacta para transportar documentos y archivos.",
+    "active": true
+  },
+  {
+    "id": 106,
+    "name": "Webcam Full HD",
+    "category": "Periféricos",
+    "price": 219900,
+    "stock": 5,
+    "description": "Cámara web 1080p con micrófono para videollamadas.",
+    "active": true
+  },
+  {
+    "id": 107,
+    "name": "Parlante compacto Wave",
+    "category": "Audio",
+    "price": 129900,
+    "stock": 9,
+    "description": "Parlante portátil con conexión Bluetooth y sonido estéreo.",
+    "active": true
+  },
+  {
+    "id": 108,
+    "name": "Hub USB-C de 6 puertos",
+    "category": "Accesorios",
+    "price": 174900,
+    "stock": 4,
+    "description": "Amplía la conectividad de tu portátil con seis puertos.",
+    "active": true
+  },
+  {
+    "id": 109,
+    "name": "Disco externo 1 TB",
+    "category": "Almacenamiento",
+    "price": 289900,
+    "stock": 3,
+    "description": "Almacenamiento portátil de alta capacidad para copias de seguridad.",
+    "active": true
+  },
+  {
+    "id": 110,
+    "name": "Mousepad XL",
+    "category": "Accesorios",
+    "price": 45900,
+    "stock": 18,
+    "description": "Superficie amplia antideslizante para teclado y mouse.",
+    "active": true
+  },
+  {
+    "id": 111,
+    "name": "Micrófono USB Studio",
+    "category": "Audio",
+    "price": 269900,
+    "stock": 2,
+    "description": "Micrófono USB para grabación, streaming y reuniones.",
+    "active": true
+  },
+  {
+    "id": 112,
+    "name": "Teclado numérico compacto",
+    "category": "Periféricos",
+    "price": 52900,
+    "stock": 0,
+    "description": "Teclado numérico USB para agilizar tareas de oficina.",
+    "active": false
+  },
+  {
+    "id": 113,
+    "name": "Cable USB-C reforzado",
+    "category": "Accesorios",
+    "price": 24900,
+    "stock": 30,
+    "description": "Cable de carga y transferencia de datos con conectores reforzados.",
+    "active": true
+  },
+  {
+    "id": 114,
+    "name": "SSD externo 500 GB",
+    "category": "Almacenamiento",
+    "price": 319900,
+    "stock": 7,
+    "description": "Unidad de estado sólido portátil, rápida y resistente.",
+    "active": true
+  },
+  {
+    "id": 115,
+    "name": "Audífonos inalámbricos Lite",
+    "category": "Audio",
+    "price": 99900,
+    "stock": 12,
+    "description": "Audífonos Bluetooth livianos con estuche de carga.",
+    "active": true
+  }
+]
