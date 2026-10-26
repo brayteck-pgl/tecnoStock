@@ -794,15 +794,37 @@ select:focus-visible {
 
 @media (max-width: 900px) {
   .filters {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
   .search-field {
     grid-column: 1 / -1;
   }
 
+  .availability-toggle {
+    grid-column: 1 / 2;
+  }
+
+  .clear-filters {
+    grid-column: 3 / 4;
+  }
+
   .product-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .cart-layout {
+    grid-template-columns: minmax(0, 1fr) 270px;
+  }
+}
+
+@media (max-width: 760px) {
+  .cart-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .cart-summary {
+    position: static;
   }
 }
 
@@ -816,14 +838,73 @@ select:focus-visible {
     font-size: 23px;
   }
 
+  .page-shell {
+    padding-top: 20px;
+  }
+
+  .welcome-panel {
+    padding: 28px 22px;
+    border-radius: 14px;
+  }
+
+  .welcome-panel p {
+    font-size: 14px;
+  }
+
+  .catalog-section,
+  .cart-section {
+    margin-top: 32px;
+  }
+
+  .filters {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    padding: 14px;
+  }
+
+  .search-field {
+    grid-column: 1 / -1;
+  }
+
+  .availability-toggle {
+    grid-column: 1 / 2;
+  }
+
+  .clear-filters {
+    grid-column: 2 / 3;
+  }
+
   .filters,
-  .product-grid,
-  .cart-layout {
+  .product-grid {
     grid-template-columns: 1fr;
   }
 
   .search-field {
     grid-column: auto;
+  }
+
+  .availability-toggle,
+  .clear-filters {
+    grid-column: auto;
+  }
+
+  .section-heading {
+    align-items: start;
+  }
+
+  .results-count {
+    padding-top: 22px;
+    white-space: nowrap;
+  }
+
+  .cart-hint {
+    max-width: 135px;
+    padding-top: 22px;
+  }
+
+  .cart-lines-panel,
+  .cart-summary {
+    padding: 17px;
   }
 
   .cart-line {
@@ -846,14 +927,18 @@ select:focus-visible {
     grid-row: 2;
     justify-self: end;
   }
-
-  .cart-hint {
-    max-width: 145px;
-    text-align: right;
-  }
 }
 
 @media (max-width: 380px) {
+  .brand {
+    gap: 7px;
+  }
+
+  .brand-mark {
+    width: 34px;
+    height: 34px;
+  }
+
   .brand small {
     font-size: 8px;
   }
@@ -865,6 +950,10 @@ select:focus-visible {
 
   .section-heading h2 {
     font-size: 19px;
+  }
+
+  .section-heading {
+    gap: 6px;
   }
 }
 
