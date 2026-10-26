@@ -19,6 +19,7 @@ Después abre <http://localhost:8000> en el navegador. También puedes usar la e
 - Catálogo JSON validado al cargar, búsqueda, filtros combinables y ordenamiento por precio.
 - Componentes nativos `<product-card>`, `<product-list>` y `<shopping-cart>`.
 - Carrito validado contra disponibilidad e inventario, con persistencia en `localStorage`.
+- Las tarjetas muestran las unidades disponibles después de descontar temporalmente las que están en el carrito; al quitar productos, esas unidades vuelven a estar disponibles.
 - Descuento del 10 % desde $300.000 COP y confirmación de pedido simulada.
 - Mensajes accesibles para carga, errores, resultados vacíos, operaciones y confirmación.
 

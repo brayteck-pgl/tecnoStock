@@ -120,14 +120,19 @@ function applyFilters() {
   const query = filters.search.value.trim().toLocaleLowerCase("es");
   const category = filters.category.value;
   const availableOnly = filters.availableOnly.checked;
-  let visible = products.filter((product) => {
-    const matchesQuery = !query ||
-      product.name.toLocaleLowerCase("es").includes(query) ||
-      product.description.toLocaleLowerCase("es").includes(query);
-    const matchesCategory = !category || product.category === category;
-    const matchesAvailability = !availableOnly || (product.active && product.stock > 0);
-    return matchesQuery && matchesCategory && matchesAvailability;
-  });
+  let visible = products
+    .map((product) => ({
+      ...product,
+      stock: product.stock - (cart.get(product.id) || 0)
+    }))
+    .filter((product) => {
+      const matchesQuery = !query ||
+        product.name.toLocaleLowerCase("es").includes(query) ||
+        product.description.toLocaleLowerCase("es").includes(query);
+      const matchesCategory = !category || product.category === category;
+      const matchesAvailability = !availableOnly || (product.active && product.stock > 0);
+      return matchesQuery && matchesCategory && matchesAvailability;
+    });
 
   if (filters.sort.value === "price-asc") {
     visible = [...visible].sort((first, second) => first.price - second.price || first.id - second.id);
@@ -155,6 +160,7 @@ function handleAdd(productId) {
     return;
   }
   cart = result.cart;
+  applyFilters();
   renderCart();
   if (persistCart()) {
     const product = products.find((item) => item.id === productId);
@@ -189,6 +195,7 @@ function handleCartChange(detail) {
     return;
   }
   cart = result.cart;
+  applyFilters();
   renderCart();
   if (persistCart()) {
     setNotice("El carrito se actualizó correctamente.", "success");
@@ -201,6 +208,7 @@ function clearCart() {
     return;
   }
   cart = new Map();
+  applyFilters();
   renderCart();
   if (persistCart()) {
     setNotice("Se vació el carrito.", "success");
@@ -234,6 +242,7 @@ function confirmOrder() {
   }
 
   cart = new Map();
+  applyFilters();
   renderCart();
   if (persistCart()) {
     setNotice(`Pedido simulado ${orderId} confirmado. No se realizó ningún pago.`, "success");
