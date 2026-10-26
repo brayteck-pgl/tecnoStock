@@ -36,7 +36,7 @@ button:focus-visible,
 a:focus-visible,
 input:focus-visible,
 select:focus-visible {
-  outline: 3px solid #8db6ff;
+  outline: 3px solid rgba(35, 87, 217, 0.55);
   outline-offset: 2px;
 }
 
@@ -121,6 +121,11 @@ select:focus-visible {
   gap: 8px;
   color: white;
   text-decoration: none;
+  transition: color 160ms ease;
+}
+
+.cart-shortcut:hover {
+  color: var(--color-primary);
 }
 
 .unit-badge {
@@ -710,9 +715,24 @@ select:focus-visible {
   box-shadow: 0 24px 80px rgba(18, 32, 57, 0.24);
 }
 
+.order-dialog[open] {
+  animation: dialog-enter 180ms ease-out;
+}
+
 .order-dialog::backdrop {
   background: rgba(15, 27, 49, 0.58);
   backdrop-filter: blur(3px);
+}
+
+@keyframes dialog-enter {
+  from {
+    transform: translateY(8px) scale(0.985);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
 }
 
 .dialog-header {
@@ -963,5 +983,7 @@ select:focus-visible {
   *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
   }
 }
