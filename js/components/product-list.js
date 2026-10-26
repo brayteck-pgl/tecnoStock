@@ -1,81 +1,81 @@
 class ProductList extends HTMLElement {
   constructor() {
     super();
-    this._products = [];
-    this._status = "loading";
-    this._message = "";
-    this.addEventListener("click", (event) => {
-      if (event.target.closest('[data-action="retry"]')) {
+    this._productos = [];
+    this._estado = "loading";
+    this._mensaje = "";
+    this.addEventListener("click", (evento) => {
+      if (evento.target.closest('[data-action="retry"]')) {
         this.dispatchEvent(new CustomEvent("catalog-retry", { bubbles: true, composed: true }));
       }
     });
   }
 
-  set products(value) {
-    this._products = value;
+  set products(productos) {
+    this._productos = productos;
     this.render();
   }
 
-  set status(value) {
-    this._status = value;
+  set status(estado) {
+    this._estado = estado;
     this.render();
   }
 
-  set message(value) {
-    this._message = value;
+  set message(mensaje) {
+    this._mensaje = mensaje;
     this.render();
   }
 
   render() {
-    this.setAttribute("aria-busy", String(this._status === "loading"));
+    this.setAttribute("aria-busy", String(this._estado === "loading"));
 
-    if (this._status === "loading") {
+    if (this._estado === "loading") {
       this.replaceChildren(this.createMessage("Cargando el catálogo…", "loading-state", true));
       return;
     }
-    if (this._status === "error") {
-      const state = this.createMessage(this._message || "No se pudo cargar el catálogo.", "error-state");
-      const retry = document.createElement("button");
-      retry.type = "button";
-      retry.className = "button button-outline";
-      retry.dataset.action = "retry";
-      retry.textContent = "Intentar de nuevo";
-      state.append(retry);
-      this.replaceChildren(state);
+    if (this._estado === "error") {
+      const estado = this.createMessage(this._mensaje || "No se pudo cargar el catálogo.", "error-state");
+      const reintentar = document.createElement("button");
+      reintentar.type = "button";
+      reintentar.className = "button button-outline";
+      reintentar.dataset.action = "retry";
+      reintentar.textContent = "Intentar de nuevo";
+      estado.append(reintentar);
+      this.replaceChildren(estado);
       return;
     }
-    if (this._status === "empty") {
+    if (this._estado === "empty") {
       this.replaceChildren(this.createMessage("El catálogo está disponible, pero todavía no tiene productos.", "empty-state"));
       return;
     }
-    if (this._products.length === 0) {
+    if (this._productos.length === 0) {
       this.replaceChildren(this.createMessage("No encontramos productos con esos filtros. Prueba cambiarlos o límpialos.", "empty-state"));
       return;
     }
 
-    const grid = document.createElement("div");
-    grid.className = "product-grid";
-    for (const product of this._products) {
-      const card = document.createElement("product-card");
-      card.product = product;
-      grid.append(card);
+    const cuadricula = document.createElement("div");
+    cuadricula.className = "product-grid";
+    for (const producto of this._productos) {
+      const tarjeta = document.createElement("product-card");
+      tarjeta.product = producto;
+      cuadricula.append(tarjeta);
     }
-    this.replaceChildren(grid);
+    this.replaceChildren(cuadricula);
   }
 
-  createMessage(message, className, withSpinner = false) {
-    const state = document.createElement("div");
-    state.className = `catalog-message ${className}`;
-    if (withSpinner) {
-      const spinner = document.createElement("span");
-      spinner.className = "spinner";
-      spinner.setAttribute("aria-hidden", "true");
-      state.append(spinner);
+  createMessage(mensaje, nombreClase, mostrarIndicador = false) {
+    const estado = document.createElement("div");
+    estado.className = `catalog-message ${nombreClase}`;
+    if (mostrarIndicador) {
+      const indicador = document.createElement("span");
+      indicador.className = "spinner";
+      indicador.setAttribute("aria-hidden", "true");
+      estado.append(indicador);
     }
-    const text = document.createElement("p");
-    text.textContent = message;
-    state.append(text);
-    return state;
+    const texto = document.createElement("p");
+    texto.textContent = mensaje;
+    estado.append(texto);
+    return estado;
   }
 }
 

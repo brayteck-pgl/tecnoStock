@@ -1,150 +1,150 @@
-function findProduct(products, productId) {
-  return products.find((product) => product.id === productId);
+function findProduct(productos, idProducto) {
+  return productos.find((producto) => producto.id === idProducto);
 }
 
-function validateSellableProduct(product) {
-  if (!product) {
+function validateSellableProduct(producto) {
+  if (!producto) {
     return "El producto ya no pertenece al catálogo.";
   }
-  if (!product.active) {
+  if (!producto.active) {
     return "Este producto no está disponible para la venta.";
   }
-  if (product.stock < 1) {
+  if (producto.stock < 1) {
     return "Este producto está agotado.";
   }
   return null;
 }
 
-export function addProduct(cart, productId, products) {
-  const product = findProduct(products, productId);
-  const productError = validateSellableProduct(product);
-  if (productError) {
-    return { cart, error: productError };
+export function addProduct(carrito, idProducto, productos) {
+  const producto = findProduct(productos, idProducto);
+  const errorProducto = validateSellableProduct(producto);
+  if (errorProducto) {
+    return { cart: carrito, error: errorProducto };
   }
 
-  const quantity = (cart.get(productId) || 0) + 1;
-  if (quantity > product.stock) {
-    return { cart, error: `Solo hay ${product.stock} unidad(es) disponibles de ${product.name}.` };
+  const cantidad = (carrito.get(idProducto) || 0) + 1;
+  if (cantidad > producto.stock) {
+    return { cart: carrito, error: `Solo hay ${producto.stock} unidad(es) disponibles de ${producto.name}.` };
   }
 
-  const nextCart = new Map(cart);
-  nextCart.set(productId, quantity);
-  return { cart: nextCart, error: null };
+  const nuevoCarrito = new Map(carrito);
+  nuevoCarrito.set(idProducto, cantidad);
+  return { cart: nuevoCarrito, error: null };
 }
 
-export function setProductQuantity(cart, productId, quantity, products) {
-  const product = findProduct(products, productId);
-  const productError = validateSellableProduct(product);
-  if (productError) {
-    return { cart, error: productError };
+export function setProductQuantity(carrito, idProducto, cantidad, productos) {
+  const producto = findProduct(productos, idProducto);
+  const errorProducto = validateSellableProduct(producto);
+  if (errorProducto) {
+    return { cart: carrito, error: errorProducto };
   }
-  if (!cart.has(productId)) {
-    return { cart, error: "El producto no se encuentra en el carrito." };
+  if (!carrito.has(idProducto)) {
+    return { cart: carrito, error: "El producto no se encuentra en el carrito." };
   }
-  if (!Number.isInteger(quantity) || quantity < 1) {
-    return { cart, error: "La cantidad debe ser un número entero de al menos 1. Puedes eliminar la línea si ya no la necesitas." };
+  if (!Number.isInteger(cantidad) || cantidad < 1) {
+    return { cart: carrito, error: "La cantidad debe ser un número entero de al menos 1. Puedes eliminar la línea si ya no la necesitas." };
   }
-  if (quantity > product.stock) {
-    return { cart, error: `Solo hay ${product.stock} unidad(es) disponibles de ${product.name}.` };
+  if (cantidad > producto.stock) {
+    return { cart: carrito, error: `Solo hay ${producto.stock} unidad(es) disponibles de ${producto.name}.` };
   }
 
-  const nextCart = new Map(cart);
-  nextCart.set(productId, quantity);
-  return { cart: nextCart, error: null };
+  const nuevoCarrito = new Map(carrito);
+  nuevoCarrito.set(idProducto, cantidad);
+  return { cart: nuevoCarrito, error: null };
 }
 
-export function removeProduct(cart, productId) {
-  if (!cart.has(productId)) {
-    return { cart, error: "El producto no se encuentra en el carrito." };
+export function removeProduct(carrito, idProducto) {
+  if (!carrito.has(idProducto)) {
+    return { cart: carrito, error: "El producto no se encuentra en el carrito." };
   }
-  const nextCart = new Map(cart);
-  nextCart.delete(productId);
-  return { cart: nextCart, error: null };
+  const nuevoCarrito = new Map(carrito);
+  nuevoCarrito.delete(idProducto);
+  return { cart: nuevoCarrito, error: null };
 }
 
-export function validateCart(cart, products) {
-  const lines = [];
-  for (const [productId, quantity] of cart) {
-    const product = findProduct(products, productId);
-    const productError = validateSellableProduct(product);
-    if (productError) {
-      return { lines: [], error: productError };
+export function validateCart(carrito, productos) {
+  const lineas = [];
+  for (const [idProducto, cantidad] of carrito) {
+    const producto = findProduct(productos, idProducto);
+    const errorProducto = validateSellableProduct(producto);
+    if (errorProducto) {
+      return { lines: [], error: errorProducto };
     }
-    if (!Number.isInteger(quantity) || quantity < 1 || quantity > product.stock) {
-      return { lines: [], error: `La cantidad guardada para ${product.name} no es válida según el inventario actual.` };
+    if (!Number.isInteger(cantidad) || cantidad < 1 || cantidad > producto.stock) {
+      return { lines: [], error: `La cantidad guardada para ${producto.name} no es válida según el inventario actual.` };
     }
-    lines.push({ product, quantity });
+    lineas.push({ product: producto, quantity: cantidad });
   }
-  return { lines, error: null };
+  return { lines: lineas, error: null };
 }
 
-export function calculateTotals(lines) {
-  const units = lines.reduce((sum, line) => sum + line.quantity, 0);
-  const subtotal = lines.reduce((sum, line) => sum + line.product.price * line.quantity, 0);
-  const discount = subtotal >= 300000 ? Math.round(subtotal * 0.1) : 0;
-  return { units, subtotal, discount, total: subtotal - discount };
+export function calculateTotals(lineas) {
+  const unidades = lineas.reduce((suma, linea) => suma + linea.quantity, 0);
+  const subtotal = lineas.reduce((suma, linea) => suma + linea.product.price * linea.quantity, 0);
+  const descuento = subtotal >= 300000 ? Math.round(subtotal * 0.1) : 0;
+  return { units: unidades, subtotal, discount: descuento, total: subtotal - descuento };
 }
 
-export function restoreCart(rawValue, products) {
-  const cart = new Map();
-  if (rawValue === null) {
-    return { cart, warning: null };
+export function restoreCart(valorGuardado, productos) {
+  const carrito = new Map();
+  if (valorGuardado === null) {
+    return { cart: carrito, warning: null };
   }
 
-  let saved;
+  let datosGuardados;
   try {
-    saved = JSON.parse(rawValue);
-  } catch (error) {
-    return { cart, warning: "El carrito guardado estaba dañado. Se inició un carrito vacío." };
+    datosGuardados = JSON.parse(valorGuardado);
+  } catch (excepcion) {
+    return { cart: carrito, warning: "El carrito guardado estaba dañado. Se inició un carrito vacío." };
   }
 
   if (
-    saved === null ||
-    typeof saved !== "object" ||
-    Array.isArray(saved) ||
-    saved.version !== 1 ||
-    !Array.isArray(saved.items)
+    datosGuardados === null ||
+    typeof datosGuardados !== "object" ||
+    Array.isArray(datosGuardados) ||
+    datosGuardados.version !== 1 ||
+    !Array.isArray(datosGuardados.items)
   ) {
-    return { cart, warning: "El carrito guardado tenía una estructura inesperada. Se inició un carrito vacío." };
+    return { cart: carrito, warning: "El carrito guardado tenía una estructura inesperada. Se inició un carrito vacío." };
   }
 
-  let skippedItems = false;
-  for (const item of saved.items) {
+  let seOmitieronElementos = false;
+  for (const elemento of datosGuardados.items) {
     if (
-      item === null ||
-      typeof item !== "object" ||
-      Array.isArray(item) ||
-      !Number.isInteger(item.id) ||
-      !Number.isInteger(item.quantity) ||
-      item.quantity < 1
+      elemento === null ||
+      typeof elemento !== "object" ||
+      Array.isArray(elemento) ||
+      !Number.isInteger(elemento.id) ||
+      !Number.isInteger(elemento.quantity) ||
+      elemento.quantity < 1
     ) {
-      skippedItems = true;
+      seOmitieronElementos = true;
       continue;
     }
 
-    const product = findProduct(products, item.id);
-    if (validateSellableProduct(product) || item.quantity > product.stock) {
-      skippedItems = true;
+    const producto = findProduct(productos, elemento.id);
+    if (validateSellableProduct(producto) || elemento.quantity > producto.stock) {
+      seOmitieronElementos = true;
       continue;
     }
 
-    const combinedQuantity = (cart.get(item.id) || 0) + item.quantity;
-    if (combinedQuantity > product.stock) {
-      skippedItems = true;
+    const cantidadCombinada = (carrito.get(elemento.id) || 0) + elemento.quantity;
+    if (cantidadCombinada > producto.stock) {
+      seOmitieronElementos = true;
       continue;
     }
-    cart.set(item.id, combinedQuantity);
+    carrito.set(elemento.id, cantidadCombinada);
   }
 
   return {
-    cart,
-    warning: skippedItems ? "Se ignoraron líneas inválidas o cantidades superiores al inventario actual." : null
+    cart: carrito,
+    warning: seOmitieronElementos ? "Se ignoraron líneas inválidas o cantidades superiores al inventario actual." : null
   };
 }
 
-export function serializeCart(cart) {
+export function serializeCart(carrito) {
   return JSON.stringify({
     version: 1,
-    items: Array.from(cart, ([id, quantity]) => ({ id, quantity }))
+    items: Array.from(carrito, ([idProducto, cantidad]) => ({ id: idProducto, quantity: cantidad }))
   });
 }

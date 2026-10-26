@@ -63,12 +63,6 @@ select:focus-visible {
   color: var(--color-ink);
 }
 
-.site-header .brand-mark {
-  border-radius: 12px;
-  background: linear-gradient(145deg, var(--color-primary), #78abc5);
-  color: white;
-}
-
 .header-inner,
 .page-shell {
   width: min(1100px, calc(100% - 32px));
@@ -87,37 +81,19 @@ select:focus-visible {
 }
 
 .brand {
-  gap: 10px;
   color: white;
   text-decoration: none;
 }
 
-.brand-mark {
-  display: grid;
-  width: 38px;
-  height: 38px;
-  place-items: center;
-  border-radius: 6px;
-  background: white;
-  color: var(--color-primary-dark);
-  font-size: 21px;
-  font-weight: bold;
-}
-
-.brand strong,
-.brand small {
-  display: block;
-}
-
 .brand strong {
-  font-size: 18px;
-}
-
-.brand small {
-  margin-top: 1px;
-  color: var(--color-muted);
-  font-size: 9px;
-  letter-spacing: 0.12em;
+  display: block;
+  color: var(--color-primary-dark);
+  background: linear-gradient(120deg, #497b9b, #5d94b4 64%, #78abc5);
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: -0.035em;
 }
 
 .cart-shortcut {
@@ -228,7 +204,7 @@ select:focus-visible {
 .eyebrow {
   margin: 0 0 4px;
   color: var(--color-primary);
-  font-size: 11px;
+  font-size: 21px;
   font-weight: 800;
   letter-spacing: 0.14em;
 }
@@ -953,19 +929,6 @@ select:focus-visible {
 }
 
 @media (max-width: 380px) {
-  .brand {
-    gap: 7px;
-  }
-
-  .brand-mark {
-    width: 34px;
-    height: 34px;
-  }
-
-  .brand small {
-    font-size: 8px;
-  }
-
   .cart-shortcut {
     gap: 5px;
     font-size: 12px;

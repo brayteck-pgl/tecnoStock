@@ -5,69 +5,69 @@ class CatalogError extends Error {
   }
 }
 
-function validateCatalog(value) {
-  if (!Array.isArray(value)) {
+function validateCatalog(datos) {
+  if (!Array.isArray(datos)) {
     throw new CatalogError("El catálogo recibido no tiene el formato esperado.");
   }
 
-  const identifiers = new Set();
-  return value.map((product, index) => {
-    const productNumber = index + 1;
+  const identificadores = new Set();
+  return datos.map((producto, indice) => {
+    const numeroProducto = indice + 1;
     if (
-      product === null ||
-      typeof product !== "object" ||
-      Array.isArray(product) ||
-      !Number.isInteger(product.id) ||
-      product.id < 1 ||
-      identifiers.has(product.id) ||
-      typeof product.name !== "string" ||
-      !product.name.trim() ||
-      typeof product.category !== "string" ||
-      !product.category.trim() ||
-      typeof product.description !== "string" ||
-      typeof product.price !== "number" ||
-      !Number.isFinite(product.price) ||
-      product.price <= 0 ||
-      !Number.isInteger(product.stock) ||
-      product.stock < 0 ||
-      typeof product.active !== "boolean"
+      producto === null ||
+      typeof producto !== "object" ||
+      Array.isArray(producto) ||
+      !Number.isInteger(producto.id) ||
+      producto.id < 1 ||
+      identificadores.has(producto.id) ||
+      typeof producto.name !== "string" ||
+      !producto.name.trim() ||
+      typeof producto.category !== "string" ||
+      !producto.category.trim() ||
+      typeof producto.description !== "string" ||
+      typeof producto.price !== "number" ||
+      !Number.isFinite(producto.price) ||
+      producto.price <= 0 ||
+      !Number.isInteger(producto.stock) ||
+      producto.stock < 0 ||
+      typeof producto.active !== "boolean"
     ) {
-      throw new CatalogError(`Los datos del producto ${productNumber} son inválidos o su identificador está repetido.`);
+      throw new CatalogError(`Los datos del producto ${numeroProducto} son inválidos o su identificador está repetido.`);
     }
 
-    identifiers.add(product.id);
+    identificadores.add(producto.id);
     return {
-      id: product.id,
-      name: product.name.trim(),
-      category: product.category.trim(),
-      price: product.price,
-      stock: product.stock,
-      description: product.description.trim(),
-      active: product.active
+      id: producto.id,
+      name: producto.name.trim(),
+      category: producto.category.trim(),
+      price: producto.price,
+      stock: producto.stock,
+      description: producto.description.trim(),
+      active: producto.active
     };
   });
 }
 
 export async function fetchCatalog() {
-  let response;
+  let respuesta;
   try {
-    response = await fetch("./data/products.json", { cache: "no-store" });
-  } catch (error) {
+    respuesta = await fetch("./data/products.json", { cache: "no-store" });
+  } catch (excepcion) {
     throw new CatalogError("No se pudo conectar con el catálogo. Verifica que la aplicación esté abierta desde un servidor local.");
   }
 
-  if (!response.ok) {
-    throw new CatalogError(`No se pudo cargar el catálogo (error HTTP ${response.status}). Intenta nuevamente.`);
+  if (!respuesta.ok) {
+    throw new CatalogError(`No se pudo cargar el catálogo (error HTTP ${respuesta.status}). Intenta nuevamente.`);
   }
 
-  let data;
+  let datosCatalogo;
   try {
-    data = await response.json();
-  } catch (error) {
+    datosCatalogo = await respuesta.json();
+  } catch (excepcion) {
     throw new CatalogError("El catálogo no contiene JSON válido. Revisa el archivo de productos.");
   }
 
-  return validateCatalog(data);
+  return validateCatalog(datosCatalogo);
 }
 
 export { CatalogError };

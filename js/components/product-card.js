@@ -1,79 +1,79 @@
 class ProductCard extends HTMLElement {
   constructor() {
     super();
-    this._product = null;
-    this.addEventListener("click", (event) => {
-      const button = event.target.closest('button[data-action="add"]');
-      if (!button || !this._product) {
+    this._producto = null;
+    this.addEventListener("click", (evento) => {
+      const boton = evento.target.closest('button[data-action="add"]');
+      if (!boton || !this._producto) {
         return;
       }
       this.dispatchEvent(new CustomEvent("cart-add-request", {
         bubbles: true,
         composed: true,
-        detail: { productId: this._product.id }
+        detail: { productId: this._producto.id }
       }));
     });
   }
 
-  set product(value) {
-    this._product = value;
+  set product(producto) {
+    this._producto = producto;
     this.render();
   }
 
   render() {
-    if (!this._product) {
+    if (!this._producto) {
       return;
     }
 
-    const product = this._product;
-    const article = document.createElement("article");
-    article.className = "product-card";
+    const producto = this._producto;
+    const articulo = document.createElement("article");
+    articulo.className = "product-card";
 
-    const cardTop = document.createElement("div");
-    cardTop.className = "product-card-top";
-    const category = document.createElement("span");
-    category.className = "product-category";
-    category.textContent = product.category;
-    cardTop.append(category);
+    const encabezadoTarjeta = document.createElement("div");
+    encabezadoTarjeta.className = "product-card-top";
+    const categoria = document.createElement("span");
+    categoria.className = "product-category";
+    categoria.textContent = producto.category;
+    encabezadoTarjeta.append(categoria);
 
-    const name = document.createElement("h3");
-    name.className = "product-name";
-    name.textContent = product.name;
-    const description = document.createElement("p");
-    description.className = "product-description";
-    description.textContent = product.description;
+    const nombre = document.createElement("h3");
+    nombre.className = "product-name";
+    nombre.textContent = producto.name;
+    const descripcion = document.createElement("p");
+    descripcion.className = "product-description";
+    descripcion.textContent = producto.description;
 
-    const footer = document.createElement("div");
-    footer.className = "product-card-footer";
-    const price = document.createElement("strong");
-    price.className = "product-price";
-    price.textContent = formatCurrency(product.price);
+    const pieTarjeta = document.createElement("div");
+    pieTarjeta.className = "product-card-footer";
+    const precio = document.createElement("strong");
+    precio.className = "product-price";
+    precio.textContent = formatCurrency(producto.price);
 
-    const stock = document.createElement("span");
-    stock.className = "stock-label";
-    const canBuy = product.active && product.stock > 0;
-    stock.classList.add(canBuy ? "stock-available" : "stock-unavailable");
-    stock.textContent = !product.active ? "No disponible" : product.stock > 0 ? `${product.stock} disponibles` : "Agotado";
+    const existencia = document.createElement("span");
+    existencia.className = "stock-label";
+    const puedeComprar = producto.active && producto.stock > 0;
+    existencia.classList.add(puedeComprar ? "stock-available" : "stock-unavailable");
+    existencia.textContent = !producto.active ? "No disponible" : producto.stock > 0 ? `${producto.stock} disponibles` : "Agotado";
 
-    const addButton = document.createElement("button");
-    addButton.className = "button button-primary add-button";
-    addButton.type = "button";
-    addButton.dataset.action = "add";
-    addButton.disabled = !canBuy;
-    addButton.textContent = canBuy ? "Agregar al carrito" : "No disponible";
-    addButton.setAttribute("aria-label", `${canBuy ? "Agregar" : "No disponible"}: ${product.name}`);
-    footer.append(price, stock, addButton);
-    article.append(cardTop, name, description, footer);
-    this.replaceChildren(article);
+    const botonAgregar = document.createElement("button");
+    botonAgregar.className = "button button-primary add-button";
+    botonAgregar.type = "button";
+    botonAgregar.dataset.action = "add";
+    botonAgregar.disabled = !puedeComprar;
+    botonAgregar.textContent = puedeComprar ? "Agregar al carrito" : "No disponible";
+    botonAgregar.setAttribute("aria-label", `${puedeComprar ? "Agregar" : "No disponible"}: ${producto.name}`);
+    pieTarjeta.append(precio, existencia, botonAgregar);
+    articulo.append(encabezadoTarjeta, nombre, descripcion, pieTarjeta);
+    this.replaceChildren(articulo);
   }
 }
 
-function formatCurrency(amount) {
+function formatCurrency(importe) {
   return new Intl.NumberFormat("es-CO", {
     style: "currency",
     currency: "COP",
     maximumFractionDigits: 0
-  }).format(amount);
+  }).format(importe);
 }
 
 customElements.define("product-card", ProductCard);
