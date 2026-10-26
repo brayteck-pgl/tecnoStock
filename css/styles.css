@@ -354,7 +354,16 @@ select:focus-visible {
 .clear-filters {
   padding-right: 5px;
   padding-left: 5px;
+  border-color: #b8d5e4;
+  background: #eaf4f8;
+  color: #426d89;
   white-space: nowrap;
+}
+
+.clear-filters:hover:not(:disabled) {
+  border-color: #9fc2d5;
+  background: #dcecf3;
+  color: #345d77;
 }
 
 .product-grid {
@@ -670,6 +679,16 @@ select:focus-visible {
 
 .clear-cart {
   margin-top: 6px;
+  border-color: #e6c6c3;
+  background: #fbf1f0;
+  color: #9c514d;
+}
+
+.clear-cart:hover:not(:disabled) {
+  border-color: #d9aaa6;
+  background: #f7e5e3;
+  color: #843e3a;
+  box-shadow: none;
 }
 
 .site-footer {
